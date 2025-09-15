@@ -16,20 +16,26 @@
     
     <div class="container">
         <div class="glass-card profile-box">
-            <div class="logo">
+            <div class="app-logo">
                 <i class="fas fa-tasks"></i>
-                <span>TaskFlow</span>
+                <h1>TaskFlow</h1>
             </div>
             <h2>Your Profile</h2>
-            <div id="profileInfo">
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Loading your information...</p>
+            
+            <div id="profileInfo" class="profile-info">
+                <p>Loading your profile information...</p>
+            </div>
+            
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="btn-group">
+                    <a href="#" class="btn btn-primary">Create Task</a>
+                    <a href="#" class="btn btn-secondary">Settings</a>
                 </div>
             </div>
-            <button id="logout" class="btn logout">
-                <span>Logout</span>
-                <i class="fas fa-sign-out-alt"></i>
+            
+            <button id="logout" class="btn btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
     </div>
@@ -40,54 +46,38 @@
             const infoDiv = document.getElementById('profileInfo');
 
             if (!token) {
-                infoDiv.innerHTML = `
-                    <p style="color: var(--danger); text-align: center;">
-                        <i class="fas fa-exclamation-circle"></i> Please login to view your profile.
-                    </p>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <a href="login.html" class="btn btn-primary">Login Now</a>
-                    </div>
-                `;
+                infoDiv.innerHTML = "<p class='message error'>Please login to view your profile. Redirecting to login page...</p>";
+                setTimeout(() => window.location.href = "login.html", 2000);
                 return;
             }
 
             try {
-                const res = await fetch('https://registration-authentification.onrender.com/api/profile', {
+                const res = await fetch('https://your-backend-url.onrender.com/api/profile', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
 
                 if (res.ok) {
                     const data = await res.json();
                     infoDiv.innerHTML = `
-                        <div class="profile-header">
-                            <div class="avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <h3>${data.name || 'User'}</h3>
-                        </div>
                         <p><strong>Email:</strong> ${data.email}</p>
-                        <p><strong>Member since:</strong> ${new Date(data.createdAt).toLocaleDateString()}</p>
-                        <p>Welcome to your TaskFlow profile! Here you can manage your account settings and preferences.</p>
+                        <p><strong>Member since:</strong> ${new Date(data.createdAt || Date.now()).toLocaleDateString()}</p>
+                        <p>Welcome to your TaskFlow dashboard! Here you can manage all your tasks and projects.</p>
                     `;
                 } else {
-                    infoDiv.innerHTML = `
-                        <p style="color: var(--danger);">
-                            <i class="fas fa-exclamation-triangle"></i> Session expired or invalid. Please login again.
-                        </p>
-                    `;
+                    infoDiv.innerHTML = "<p class='message error'>Session expired. Please login again.</p>";
+                    setTimeout(() => {
+                        localStorage.removeItem('token');
+                        window.location.href = "login.html";
+                    }, 2000);
                 }
             } catch (error) {
-                infoDiv.innerHTML = `
-                    <p style="color: var(--danger);">
-                        <i class="fas fa-exclamation-triangle"></i> Network error. Please check your connection.
-                    </p>
-                `;
+                infoDiv.innerHTML = "<p class='message error'>Network error. Please try again later.</p>";
             }
         });
 
         document.getElementById('logout').addEventListener('click', () => {
             localStorage.removeItem('token');
-            window.location.href = "index.html";
+            window.location.href = "login.html";
         });
     </script>
 </body>

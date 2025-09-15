@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login - TaskFlow</title>
+    <title>Register - TaskFlow</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -20,10 +20,15 @@
                 <i class="fas fa-tasks"></i>
                 <h1>TaskFlow</h1>
             </div>
-            <h2>Welcome Back</h2>
-            <p>Sign in to continue to your task management dashboard</p>
+            <h2>Create Account</h2>
+            <p>Join thousands managing their tasks efficiently</p>
             
-            <form id="loginForm">
+            <form id="registerForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="name" placeholder="Full Name" required />
+                </div>
+                
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
                     <input type="email" id="email" placeholder="Email address" required />
@@ -34,43 +39,52 @@
                     <input type="password" id="password" placeholder="Password" required />
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Sign In</button>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Create Account</button>
                 <p id="message" class="message"></p>
             </form>
             
-            <div class="additional-options">
-                <p><a href="#">Forgot your password?</a></p>
-                <p>Don't have an account? <a href="register.html">Create one here</a>.</p>
-            </div>
+            <p>Already have an account? <a href="login.html">Sign in here</a>.</p>
         </div>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             const msg = document.getElementById('message');
 
+            if (password !== confirmPassword) {
+                msg.textContent = "Passwords don't match!";
+                msg.className = "message error";
+                return;
+            }
+
             // Show loading state
-            msg.textContent = "Signing in...";
+            msg.textContent = "Creating your account...";
             msg.className = "message";
 
             try {
-                const res = await fetch('https://your-backend-url.onrender.com/api/login', {
+                const res = await fetch('https://your-backend-url.onrender.com/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ name, email, password })
                 });
 
                 const data = await res.json();
                 if (res.ok) {
-                    localStorage.setItem('token', data.token);
-                    msg.textContent = "Login successful! Redirecting...";
+                    msg.textContent = "Account created successfully! Redirecting to login...";
                     msg.className = "message success";
-                    setTimeout(() => window.location.href = "profile.html", 1000);
+                    setTimeout(() => window.location.href = "login.html", 2000);
                 } else {
-                    msg.textContent = data.message || "Login failed. Please try again.";
+                    msg.textContent = data.message || "Registration failed. Please try again.";
                     msg.className = "message error";
                 }
             } catch (error) {

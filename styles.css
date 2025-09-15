@@ -11,7 +11,7 @@
     --gray: #64748b;
     --gray-light: #e2e8f0;
     --border-radius: 16px;
-    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     --transition: all 0.3s ease;
 }
 
@@ -30,8 +30,9 @@ body {
     justify-content: center;
     align-items: center;
     color: var(--dark);
-    overflow-x: hidden;
+    padding: 20px;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* Background animation */
@@ -49,25 +50,22 @@ body {
     position: absolute;
     border-radius: 50%;
     opacity: 0.1;
-    animation: float 15s infinite linear;
 }
 
 .shape-1 {
     width: 300px;
     height: 300px;
     background: var(--primary);
-    top: -150px;
-    left: -150px;
-    animation-delay: 0s;
+    top: -100px;
+    left: -100px;
 }
 
 .shape-2 {
     width: 200px;
     height: 200px;
     background: var(--secondary);
-    bottom: -100px;
+    bottom: -50px;
     right: 20%;
-    animation-delay: -5s;
 }
 
 .shape-3 {
@@ -75,30 +73,16 @@ body {
     height: 150px;
     background: var(--success);
     top: 30%;
-    right: -75px;
-    animation-delay: -10s;
+    right: -50px;
 }
 
-@keyframes float {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    50% {
-        transform: translate(20px, 20px) rotate(180deg);
-    }
-    100% {
-        transform: translate(0, 0) rotate(360deg);
-    }
-}
-
+/* Container */
 .container {
     width: 100%;
     max-width: 1200px;
-    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
 }
 
 /* Glass card effect */
@@ -116,53 +100,80 @@ body {
 
 .glass-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* Logo */
-.logo {
+/* App logo */
+.app-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary);
+    margin-bottom: 20px;
 }
 
-.logo i {
+.app-logo i {
+    font-size: 2.5rem;
+    color: var(--primary);
     margin-right: 10px;
-    font-size: 32px;
+}
+
+.app-logo h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
 }
 
 /* Headings */
 h1, h2 {
     margin-bottom: 20px;
-    color: var(--dark);
     text-align: center;
 }
 
 h1 {
-    font-size: 28px;
-    line-height: 1.3;
+    font-size: 2.5rem;
+    color: var(--dark);
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 1.8rem;
+    color: var(--gray);
+    font-weight: 500;
 }
 
+/* Text */
 p {
-    color: var(--gray);
-    margin-bottom: 30px;
-    text-align: center;
+    margin-bottom: 25px;
     line-height: 1.6;
+    color: var(--gray);
+    text-align: center;
 }
 
 /* Form elements */
+.form-box {
+    position: relative;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    z-index: 1;
+}
+
 input {
     width: 100%;
-    padding: 16px 20px;
-    margin-bottom: 20px;
+    padding: 15px 15px 15px 45px;
+    margin-bottom: 15px;
     border: 1px solid var(--gray-light);
     border-radius: var(--border-radius);
     outline: none;
@@ -178,172 +189,140 @@ input:focus {
 
 /* Buttons */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px 28px;
+    display: inline-block;
+    padding: 15px 25px;
     border-radius: var(--border-radius);
-    cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
+    text-align: center;
+    cursor: pointer;
     transition: var(--transition);
     text-decoration: none;
     border: none;
-    outline: none;
-    margin: 8px 0;
-}
-
-.btn i {
-    margin-left: 8px;
-    transition: var(--transition);
+    width: 100%;
 }
 
 .btn-primary {
-    background-color: var(--primary);
+    background: var(--primary);
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-dark);
+    background: var(--primary-dark);
     transform: translateY(-2px);
 }
 
-.btn-primary:hover i {
-    transform: translateX(4px);
-}
-
 .btn-secondary {
-    background-color: transparent;
+    background: transparent;
     color: var(--primary);
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
 }
 
 .btn-secondary:hover {
-    background-color: rgba(99, 102, 241, 0.1);
+    background: rgba(99, 102, 241, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-logout {
+    background: var(--danger);
+    color: white;
+    margin-top: 20px;
+}
+
+.btn-logout:hover {
+    background: #dc2626;
     transform: translateY(-2px);
 }
 
 .btn-group {
     display: flex;
-    flex-direction: column;
-    margin: 20px 0;
-}
-
-/* Form box */
-.form-box {
-    width: 100%;
-    max-width: 450px;
-}
-
-.form-footer {
+    gap: 15px;
     margin-top: 20px;
-    text-align: center;
-    color: var(--gray);
 }
 
-.form-footer a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
+.btn-group .btn {
+    width: auto;
+    flex: 1;
 }
 
-.form-footer a:hover {
-    text-decoration: underline;
+/* Features */
+.features {
+    margin: 25px 0;
 }
 
-/* Profile */
-.profile-box {
-    text-align: center;
-}
-
-#profileInfo {
-    margin: 30px 0;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    border-radius: var(--border-radius);
-}
-
-#profileInfo p {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-#profileInfo strong {
-    color: var(--primary);
-}
-
-.profile-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: var(--primary);
+.feature {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px;
-    color: white;
-    font-size: 32px;
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    background: rgba(99, 102, 241, 0.1);
+    transition: var(--transition);
+}
+
+.feature:hover {
+    background: rgba(99, 102, 241, 0.2);
+    transform: translateX(5px);
+}
+
+.feature i {
+    margin-right: 10px;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.feature span {
+    color: var(--dark);
+    font-weight: 500;
 }
 
 /* Message */
 .message {
     margin-top: 15px;
-    font-size: 0.9rem;
-    text-align: center;
     padding: 10px;
     border-radius: var(--border-radius);
-}
-
-/* Features */
-.features {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
-}
-
-.feature {
     text-align: center;
+    font-weight: 500;
 }
 
-.feature i {
-    font-size: 24px;
+.message.success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.message.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+}
+
+/* Links */
+a {
     color: var(--primary);
-    margin-bottom: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
 }
 
-.feature h3 {
-    font-size: 14px;
-    margin: 0;
-    color: var(--gray);
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
 }
 
-/* Logout button */
-.logout {
-    background-color: var(--danger);
-    color: white;
-    width: auto;
-    padding: 12px 24px;
-    margin-top: 20px;
+/* Profile info */
+.profile-info {
+    margin: 25px 0;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background: rgba(99, 102, 241, 0.1);
 }
 
-.logout:hover {
-    background-color: #dc2626;
-}
-
-.loading {
-    text-align: center;
-    color: var(--gray);
-}
-
-.fa-spinner {
+.profile-info p {
     margin-bottom: 10px;
-    font-size: 24px;
+    text-align: left;
+}
+
+.profile-info strong {
+    color: var(--primary);
 }
 
 /* Responsive design */
@@ -352,20 +331,24 @@ input:focus {
         padding: 30px 20px;
     }
     
-    h1 {
-        font-size: 24px;
-    }
-    
     .btn-group {
         flex-direction: column;
     }
     
-    .btn {
-        width: 100%;
+    .app-logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
     }
 }
 
-/* Animations */
+/* Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
